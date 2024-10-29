@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 
-# Aller dans le répertoire de notes
 cd ~/Notes || exit
 
-# Fonction pour ouvrir un fichier spécifique avec une commande Vim prédéfinie
 open_with_obsidian() {
     local action=$1
     nvim +"autocmd VimEnter * Obsidian${action}" all/Todo.md
 }
 
-# Ajouter un switch case pour gérer les différents arguments (actions)
 case "$1" in
 "dailies")
     open_with_obsidian "Dailies"
