@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-options=$(cat <<-END
+options=$(
+    cat <<-END
 Nouvelle note
 Depuis un modèle
 Journal
@@ -14,41 +15,41 @@ Accueil
 END
 )
 
-selected=$(echo -e "$options" | rofi -i -dmenu -p "Carnet :")
+selected=$(echo -e "$options" | rofi -i -dmenu -p "Carnet :" | tr -d '\n')
 
 case "$selected" in
-    "Nouvelle note")
-       kitty -e /home/mathieu/.local/bin/note-new.sh
-        ;;
-    "Depuis un modèle")
-        kitty -e /home/mathieu/.local/bin/note-new-from-template.sh
-        ;;
-    "Journal")
-        kitty -e /home/mathieu/.local/bin/note-journal.sh
-        ;;
-    "Journaux récents")
-        kitty -e /home/mathieu/.local/bin/note-dailies.sh
-        ;;
-    "Chercher dans le contenu")
-        kitty -e /home/mathieu/.local/bin/note-grep.sh
-        ;;
-    "Chercher par nom")
-        kitty -e /home/mathieu/.local/bin/note-quick-switch.sh
-        ;;
-    "Chercher par tags")
-        kitty -e /home/mathieu/.local/bin/note-search-by-tags.sh
-        ;;
-    "Réviser Inbox")
-       kitty -e nvim ~/Notes/inbox/*
-        ;;
-    "Todo")
-       kitty -e nvim ~/Notes/all/Todo.md
-        ;;
-    "Accueil")
-       kitty -e nvim ~/Notes/all/Home.md
-        ;;
-    *)
-        echo "Option non valide ou annulée."
-        ;;
+"Nouvelle note")
+    kitty -e /home/mathieu/.local/bin/note.sh new
+    ;;
+"Depuis un modèle")
+    kitty -e /home/mathieu/.local/bin/note.sh new-from-template
+    ;;
+"Journal")
+    kitty -e /home/mathieu/.local/bin/note.sh journal
+    ;;
+"Journaux récents")
+    kitty -e /home/mathieu/.local/bin/note.sh dailies
+    ;;
+"Chercher dans le contenu")
+    kitty -e /home/mathieu/.local/bin/note.sh grep
+    ;;
+"Chercher par nom")
+    kitty -e /home/mathieu/.local/bin/note.sh quick-switch
+    ;;
+"Chercher par tags")
+    kitty -e /home/mathieu/.local/bin/note.sh search-by-tags
+    ;;
+"Réviser Inbox")
+    kitty -e /home/mathieu/.local/bin/note.sh inbox
+    ;;
+"Todo")
+    kitty -e nvim ~/Notes/all/Todo.md
+    kitty -e /home/mathieu/.local/bin/note.sh todo
+    ;;
+"Accueil")
+    kitty -e /home/mathieu/.local/bin/note.sh home
+    ;;
+*)
+    echo "Option non valide ou annulée."
+    ;;
 esac
-
