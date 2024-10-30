@@ -2,32 +2,32 @@
 
 cd ~/Notes || exit
 
-open_with_o-nvim() {
+open_with_o_nvim() {
     local action=$1
     nvim +"autocmd VimEnter * Obsidian${action}" all/Todo.md
 }
 
 case "$1" in
 "dailies")
-    open_with_o-nvim "Dailies"
+    open_with_o_nvim "Dailies"
     ;;
 "grep")
-    open_with_o-nvim "Search"
+    open_with_o_nvim "Search"
     ;;
 "journal")
-    open_with_o-nvim "Today"
+    open_with_o_nvim "Today"
     ;;
 "new-from-template")
-    open_with_o-nvim "NewFromTemplate"
+    open_with_o_nvim "NewFromTemplate"
     ;;
 "new")
-    open_with_o-nvim "New"
+    open_with_o_nvim "New"
     ;;
 "quick-switch")
-    open_with_o-nvim "QuickSwitch"
+    open_with_o_nvim "QuickSwitch"
     ;;
 "search-by-tags")
-    open_with_o-nvim "Tags"
+    open_with_o_nvim "Tags"
     ;;
 "todo")
     nvim all/Todo.md
