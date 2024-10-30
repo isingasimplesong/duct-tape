@@ -12,7 +12,7 @@ license="$HOME/dotfiles/misc/license"
 
 # Initialisation du dépôt git local
 git init || {
-    echo "Erreur lors de l'initialisation du dépôt git" >&2
+    echo "Erreur lors de l'initialisation du dépôt local" >&2
     exit 1
 }
 
