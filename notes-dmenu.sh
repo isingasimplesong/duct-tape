@@ -33,7 +33,7 @@ case "$selected" in
 "Chercher dans le contenu")
     kitty -e /home/mathieu/.local/bin/note.sh grep
     ;;
-"Chercher par nom")
+"Chercher dans le titre")
     kitty -e /home/mathieu/.local/bin/note.sh quick-switch
     ;;
 "Chercher par tags")
