@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 
 # Nextcloud server URL
-NEXTCLOUD_URL="https://nc.2027a.net"
+NEXTCLOUD_URL="$NC_URL"
 
 # User credentials
-USERNAME="mathieu"
-PASSWORD=""
+USERNAME="$NC_LOGIN"
+PASSWORD="$NC_AUTH"
 
 # Define local and remote directory pairs
-SYNC_DIRS=(
-    "/home/mathieu/Dev:/Dev"
-    "/home/mathieu/Documents:/Documents"
-    "/home/mathieu/Images:/Images"
-)
+SYNC_DIRS="$NC_DIRS"
 
 # Function to sync a single directory
 sync_directory() {
@@ -40,7 +36,7 @@ sync_directory() {
 echo "Starting Nextcloud synchronization"
 
 for pair in "${SYNC_DIRS[@]}"; do
-    IFS=':' read -r local_dir remote_path <<< "$pair"
+    IFS=':' read -r local_dir remote_path <<<"$pair"
     sync_directory "$local_dir" "$remote_path"
 done
 
