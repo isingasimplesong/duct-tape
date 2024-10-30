@@ -2,7 +2,7 @@
 
 # Vérifier les arguments
 if [ $# -lt 2 ]; then
-    echo "Usage: $0 <source_pattern> <destination_directory>"
+    echo "Usage: $(basename "$0") <source_pattern> <destination_directory>"
     exit 1
 fi
 
@@ -48,7 +48,7 @@ for pattern in "${SOURCE_PATTERNS[@]}"; do
     while IFS= read -r -d $'\0' snapshot; do
         if [ -d "$snapshot" ]; then
             # Vérifier si c'est un sous-volume BTRFS
-            if sudo btrfs subvolume show "$snapshot" &> /dev/null; then
+            if sudo btrfs subvolume show "$snapshot" &>/dev/null; then
                 move_snapshot_fast "$snapshot" "$DEST_DIR"
             else
                 echo "Ignoré: $snapshot n'est pas un sous-volume BTRFS."
