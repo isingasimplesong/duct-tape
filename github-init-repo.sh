@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ "$1" != "--public" && "$1" != "--private" ]]; then
+    echo "Usage: $(basename "$0") --public | --private" >&2
+    exit 1
+fi
+
+project_visibility=$1
 project_name=$(basename "$(pwd)")
 gitignore_source="$HOME/dotfiles/misc/gitignore"
 license="$HOME/dotfiles/misc/license"
@@ -35,7 +41,7 @@ if ! command -v gh &>/dev/null; then
     exit 1
 fi
 
-gh repo create "$project_name" --public --source=. --remote=origin || {
+gh repo create "$project_name" "$project_visibility" --source=. --remote=origin || {
     echo "Erreur lors de la création du dépôt GitHub." >&2
     exit 1
 }
