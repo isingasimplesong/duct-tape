@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+run="kitty -e"
+LOCAL_BIN=".local/bin"
+
 options=$(
     cat <<-END
 Nouvelle note
@@ -15,39 +18,39 @@ Accueil
 END
 )
 
-selected=$(echo -e "$options" | rofi -i -dmenu -p "Carnet :" | tr -d '\n')
+selected=$(echo -e "$options" | rofi -i -dmenu -p "Notes :" | tr -d '\n')
 
 case "$selected" in
 "Nouvelle note")
-    kitty -e /home/mathieu/.local/bin/note.sh new
+    $run $HOME/$LOCAL_BIN/note.sh new
     ;;
 "Depuis un modèle")
-    kitty -e /home/mathieu/.local/bin/note.sh new-from-template
+    $run $HOME/$LOCAL_BIN/note.sh new-from-template
     ;;
 "Journal")
-    kitty -e /home/mathieu/.local/bin/note.sh journal
+    $run $HOME/$LOCAL_BIN/note.sh journal
     ;;
 "Journaux récents")
-    kitty -e /home/mathieu/.local/bin/note.sh dailies
+    $run $HOME/$LOCAL_BIN/note.sh dailies
     ;;
 "Chercher dans le contenu")
-    kitty -e /home/mathieu/.local/bin/note.sh grep
+    $run $HOME/$LOCAL_BIN/note.sh grep
     ;;
 "Chercher dans le titre")
-    kitty -e /home/mathieu/.local/bin/note.sh quick-switch
+    $run $HOME/$LOCAL_BIN/note.sh quick-switch
     ;;
 "Chercher par tags")
-    kitty -e /home/mathieu/.local/bin/note.sh search-by-tags
+    $run $HOME/$LOCAL_BIN/note.sh search-by-tags
     ;;
 "Réviser Inbox")
-    kitty -e /home/mathieu/.local/bin/note.sh inbox
+    $run $HOME/$LOCAL_BIN/note.sh inbox
     ;;
 "Todo")
-    kitty -e nvim ~/Notes/all/Todo.md
-    kitty -e /home/mathieu/.local/bin/note.sh todo
+    $run nvim ~/Notes/all/Todo.md
+    $run $HOME/$LOCAL_BIN/note.sh todo
     ;;
 "Accueil")
-    kitty -e /home/mathieu/.local/bin/note.sh home
+    $run $HOME/$LOCAL_BIN/note.sh home
     ;;
 *)
     echo "Option non valide ou annulée."
