@@ -5,7 +5,7 @@
 > **Use at your own risks**
 
 - [btrfs-backup.sh](btrfs-backup.sh) maintains a btrfs snapshosts based backup
- on an external drive. [btrfs-backup-stats.sh](btrfs-backup-stats.sh) is a very
+ on an external drive, [btrfs-backup-stats.sh](btrfs-backup-stats.sh) is a very
  simple script showing stats about it, while [btrfs-move-fast.sh](btrfs-move-fast.sh)
  helps quickly moving snapshots around in the same volume
 
