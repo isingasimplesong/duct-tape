@@ -12,7 +12,7 @@
 - [github-init-repo.sh](github-init-repo.sh) helps create a new private or
  public github repository directly from your shell
 
-- [note.sh](note.sh) allows you to directly call [obsidian.nvim](https://github.com/epwalsh/obsidian.nvim) fonctions
+- [note.sh](note.sh) allows you to directly call [obsidian.nvim](https://github.com/epwalsh/obsidian.nvim) commands
  from the command line, while [notes-dmenu.sh](notes-dmenu.sh) give you an
  interactive menu for creating them
 
