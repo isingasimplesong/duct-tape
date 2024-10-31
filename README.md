@@ -1,7 +1,7 @@
 # Duct Tape
 
-> [!CAUTION]
-> Mostly useless scripts, designed for my local system
+> [!IMPORTANT]
+> Mostly useless scripts, designed for my local system \
 > **Use at your own risks**
 
 - [btrfs-backup.sh](btrfs-backup.sh) maintain a btrfs snapshosts based backup
