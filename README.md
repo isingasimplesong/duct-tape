@@ -4,7 +4,7 @@
 > Mostly useless scripts, designed for [my local system](https://github.com/isingasimplesong/dotfiles/blob/main/zsh/aliases) \
 > **Use at your own risks**
 
-- [btrfs-backup.sh](btrfs-backup.sh) maintains a btrfs snapshosts based backup
+- [btrfs-backup.sh](btrfs-backup.sh) maintains a snapshosts-based backup
  on an external drive, [btrfs-backup-stats.sh](btrfs-backup-stats.sh) is a very
  simple script showing stats about it, while [btrfs-move-fast.sh](btrfs-move-fast.sh)
  helps quickly moving snapshots around in the same volume
