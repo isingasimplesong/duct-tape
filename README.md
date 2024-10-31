@@ -1,6 +1,6 @@
 # Duct Tape
 
-> [!INFO]
+> [!CAUTION]
 > Mostly useless scripts, designed for my local system
 > **Use at your own risks**
 
