@@ -19,13 +19,13 @@ menu() {
 	printf "7. FIP Monde\n"
 	printf "8. P4k1d3rm!\n"
 	printf "9. TSF Jazz\n"
-	printf "11. France Culture\n"
-	printf "12. France Info\n"
-	printf "13. France Inter\n"
-	printf "14. France Musique\n"
-	printf "15. RFI Monde\n"
-	printf "16. Lofi Girl - Beats to relax/study\n"
-	printf "17. Radio Nova\n"
+	printf "10. France Culture\n"
+	printf "11. France Info\n"
+	printf "12. France Inter\n"
+	printf "13. France Musique\n"
+	printf "14. RFI Monde\n"
+	printf "15. Lofi Girl - Beats to relax/study\n"
+	printf "16. Radio Nova\n"
 }
 
 main() {
@@ -40,7 +40,7 @@ main() {
 		;;
 	2)
 		notification "ICI Première 📻"
-		URL="http://cbcmp3.ic.llnwd.net/stream/cbcmp3_P-2QMTL0_MTL"
+		URL="http://18683.live.streamtheworld.com/CBFFM_SRC.mp3"
 		break
 		;;
 	3)
@@ -76,45 +76,39 @@ main() {
 	9)
 		notification "TSF Jazz 📻🎶"
 		URL="http://tsfjazz.ice.infomaniak.ch/tsfjazz-high"
-		break
+		breaj
 		;;
 	10)
-		notification "HOT 97 New York 📻🎶"
-		URL="https://24883.live.streamtheworld.com/KVEGFM.mp3"
-		break
-		;;
-	11)
 		notification "France culture 📻"
 		URL="http://icecast.radiofrance.fr/franceculture-hifi.aac"
 		break
 		;;
-	12)
+	11)
 		notification "France Info 📻"
 		URL="http://icecast.radiofrance.fr/franceinfo-hifi.aac"
 		break
 		;;
-	13)
+	12)
 		notification "France Inter 📻"
-		# URL="http://icecast.radiofrance.fr/franceinter-hifi.aac"
 		URL="http://icecast.radiofrance.fr/franceinfo-midfi.mp3"
 		break
 		;;
-	14)
+	13)
 		notification "France Musique 📻🎶"
 		URL="http://icecast.radiofrance.fr/francemusique-hifi.aac"
 		break
 		;;
-	15)
+	14)
 		notification "RFI Monde 📻"
 		URL="http://live02.rfi.fr/rfimonde-96k.mp3"
 		break
 		;;
-	16)
+	15)
 		notification "Lofi Girl - beats to relax/study 📻🎶"
 		URL="https://www.youtube.com/watch?v=jfKfPfyJRdk"
 		break
 		;;
-	17)
+	16)
 		notification "Radio Nova 📻🎶"
 		URL="http://novazz.ice.infomaniak.ch/novazz-128.mp3"
 		break
