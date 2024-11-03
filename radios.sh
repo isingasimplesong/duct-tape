@@ -24,10 +24,8 @@ menu() {
 	printf "13. France Inter\n"
 	printf "14. France Musique\n"
 	printf "15. RFI Monde\n"
-	printf "16. Radio Ouistiti\n"
-	printf "17. Lofi Girl - Beats to sleep\n"
-	printf "18. Lofi Girl - Beats to relax/study\n"
-	printf "19. Synthwave - Retrowave - Retro Electro Livestream\n"
+	printf "16. Lofi Girl - Beats to relax/study\n"
+	printf "17. Radio Nova\n"
 }
 
 main() {
@@ -72,7 +70,7 @@ main() {
 		;;
 	8)
 		notification "P4k1D3rm! 📻🎶"
-		URL="https://www.youtube.com/watch?v=iiXtSKQCa4s"
+		URL="https://www.youtube.com/watch?v=BCBENSeVVgc"
 		break
 		;;
 	9)
@@ -97,7 +95,8 @@ main() {
 		;;
 	13)
 		notification "France Inter 📻"
-		URL="http://icecast.radiofrance.fr/franceinter-hifi.aac"
+		# URL="http://icecast.radiofrance.fr/franceinter-hifi.aac"
+		URL="http://icecast.radiofrance.fr/franceinfo-midfi.mp3"
 		break
 		;;
 	14)
@@ -111,23 +110,13 @@ main() {
 		break
 		;;
 	16)
-		notification "Radio Ouistiti 📻🎶"
-		URL="http://ouistiti.stream2net.eu:8100/;"
-		break
-		;;
-	17)
-		notification "Lofi Girl - beats to sleep 📻🎶"
-		URL="https://www.youtube.com/watch?v=rUxyKA_-grg"
-		break
-		;;
-	18)
 		notification "Lofi Girl - beats to relax/study 📻🎶"
 		URL="https://www.youtube.com/watch?v=jfKfPfyJRdk"
 		break
 		;;
-	19)
-		notification "Synthwave - Retrowave - Retro Electro Livestream 📻🎶"
-		URL="https://www.youtube.com/watch?v=9P23oE6ekwQ"
+	17)
+		notification "Radio Nova 📻🎶"
+		URL="http://novazz.ice.infomaniak.ch/novazz-128.mp3"
 		break
 		;;
 	esac
