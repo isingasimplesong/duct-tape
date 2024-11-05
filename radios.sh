@@ -29,7 +29,7 @@ menu() {
 }
 
 main() {
-	choice=$(menu | rofi -dmenu | cut -d. -f1)
+	choice=$(menu | rofi -dmenu -p "Choisir un flux :" | cut -d. -f1)
 
 	case $choice in
 	1)
