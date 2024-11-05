@@ -3,12 +3,12 @@
 declare -A URLS
 
 URLS=(
-  ["google"]="https://www.google.com/search?q="
+  ["Google"]="https://www.google.com/search?q="
   ["Brave Search"]="https://search.brave.com/search?q="
   ["Arch Wiki"]="https://wiki.archlinux.org/title/"
-  ["youtube"]="https://www.youtube.com/results?search_query="
-  ["imdb"]="http://www.imdb.com/find?ref_=nv_sr_fn&q="
-  ["rottentomatoes"]="https://www.rottentomatoes.com/search/?search="
+  ["Youtube"]="https://www.youtube.com/results?search_query="
+  ["IMDB"]="http://www.imdb.com/find?ref_=nv_sr_fn&q="
+  ["Rottentomatoes"]="https://www.rottentomatoes.com/search/?search="
 )
 
 # List for rofi
