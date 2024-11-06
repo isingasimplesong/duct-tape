@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+source ~/dotfiles/zsh/secrets
 COINGECKO_API_ENDPOINT="https://api.coingecko.com/api/v3/simple/price"
 CRYPTOCURRENCY="bitcoin"
 CURRENCY="cad"
 
-source ~/dotfiles/zsh/secrets
 # Fetching BTC/CAD value from CoinGecko API
 response=$(curl -s "${COINGECKO_API_ENDPOINT}?ids=${CRYPTOCURRENCY}&vs_currencies=${CURRENCY}")
 
