@@ -22,4 +22,4 @@ fi
 
 total_value=$(echo "$MY_BTC_AMOUNT * $btc_to_cad" | bc -l)
 
-notify-send "BTC/CAD" "$(printf 'Mes Bitcoins valent %.2f CAD' "$total_value")"
+notify-send "BTC/CAD" "$(printf 'Mes BTC valent %.2f CAD' "$total_value")"
