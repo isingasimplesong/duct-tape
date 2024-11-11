@@ -5,7 +5,7 @@ STATE="Quebec"
 CITY="Montreal"
 SECRETS_FILE=~/dotfiles/zsh/secrets
 source $SECRETS_FILE
-ICONS_PATH="/home/mathieu/dotfiles/misc/icons"
+ICONS_PATH="$HOME/dotfiles/misc/icons"
 
 response=$(curl --silent --location -g "http://api.airvisual.com/v2/city?city=$CITY&state=$STATE&country=$COUNTRY&key=${IQAIR_API_KEY}")
 
