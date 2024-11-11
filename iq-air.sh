@@ -3,7 +3,7 @@
 COUNTRY="Canada"
 STATE="Quebec"
 CITY="Montreal"
-SECRETS_FILE=~/dotfiles/zsh/secrets
+SECRETS_FILE="$HOME/dotfiles/zsh/secrets"
 source $SECRETS_FILE
 ICONS_PATH="$HOME/dotfiles/misc/icons"
 
