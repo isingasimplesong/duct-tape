@@ -17,9 +17,6 @@
  command line, while [notes-dmenu.sh](notes-dmenu.sh) give you an interactive
  menu for creating them
 
-- [nextcloud-sync.sh](nextcloud-sync.sh) synchronize local folders with your
- nextcloud account
-
 - [radios.sh](radios.sh) let you chose from several audio streams to listen
 
 - [waybar-toggle-tray.sh](waybar-toggle-tray.sh) toggle the tray on & off from
