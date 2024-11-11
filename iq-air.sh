@@ -1,17 +1,13 @@
 #!/usr/bin/env bash
 
-if [ -z "$IQAIR_API_KEY" ]; then
-    echo "Erreur : IQAIR_API_KEY variable d'environnement non définie."
-    exit 1
-fi
+COUNTRY="Canada"
+STATE="Quebec"
+CITY="Montreal"
+SECRETS_FILE=~/dotfiles/zsh/secrets
+source $SECRETS_FILE
+ICONS_PATH="/home/mathieu/dotfiles/misc/icons"
 
-country="Canada"
-state="Quebec"
-city="Montreal"
-
-icons_path="$HOME/dotfiles/misc/icons"
-
-response=$(curl --silent --location -g "http://api.airvisual.com/v2/city?city=$city&state=$state&country=$country&key=${IQAIR_API_KEY}")
+response=$(curl --silent --location -g "http://api.airvisual.com/v2/city?city=$CITY&state=$STATE&country=$COUNTRY&key=${IQAIR_API_KEY}")
 
 status=$(echo "$response" | jq -r '.status')
 if [ "$status" != "success" ]; then
@@ -42,26 +38,26 @@ read aqi_description aqi_color <<<$(get_aqi_description "$aqius")
 
 case $aqi_color in
 green)
-    icon="$icons_path/green-circle.png"
+    icon="$ICONS_PATH/green-circle.png"
     ;;
 yellow)
-    icon="$icons_path/yellow-circle.png"
+    icon="$ICONS_PATH/yellow-circle.png"
     ;;
 orange)
-    icon="$icons_path/orange-circle.png"
+    icon="$ICONS_PATH/orange-circle.png"
     ;;
 red)
-    icon="$icons_path/red-circle.png"
+    icon="$ICONS_PATH/red-circle.png"
     ;;
 purple)
-    icon="$icons_path/purple-circle.png"
+    icon="$ICONS_PATH/purple-circle.png"
     ;;
 maroon)
-    icon="$icons_path/maroon-circle.png"
+    icon="$ICONS_PATH/maroon-circle.png"
     ;;
 esac
 
-notify-send "AQI à $city" \
+notify-send "AQI à $CITY" \
     "$aqius - Air $aqi_description" \
     --urgency=low \
     --icon="$icon"
