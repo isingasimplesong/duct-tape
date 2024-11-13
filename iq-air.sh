@@ -20,15 +20,15 @@ aqius=$(echo "$response" | jq -r '.data.current.pollution.aqius')
 get_aqi_description() {
     local aqi=$1
     if ((aqi <= 50)); then
-        echo "très pur" "green"
+        echo "très_pur" "green"
     elif ((aqi <= 100)); then
         echo "pur" "yellow"
     elif ((aqi <= 150)); then
-        echo "peu sain" "orange"
+        echo "peu_sain" "orange"
     elif ((aqi <= 200)); then
-        echo "non sain" "red"
+        echo "non_sain" "red"
     elif ((aqi <= 300)); then
-        echo "très pollué" "purple"
+        echo "très_pollué" "purple"
     else
         echo "dangereux" "maroon"
     fi
