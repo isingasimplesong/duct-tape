@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+# Configuration par défaut
+NOTIFICATION_TYPE="pushover"
+PUSHOVER_TOKEN=$PUSHOVER_TOKEN_NOTIFY_ME
+PUSHOVER_USER=$PUSHOVER_USER_KEY
+
+# Fonction pour envoyer une notification locale
+send_local_notification() {
+    local title="$1"
+    local message="$2"
+    if ! command -v notify-send &>/dev/null; then
+        echo "notify-send n'est pas installé"
+        echo "Title: $title"
+        echo "Message: $message"
+        return 1
+    fi
+    notify-send "$title" "$message"
+}
+
+# Fonction pour envoyer une notification via Pushover
+send_pushover_notification() {
+    local title="$1"
+    local message="$2"
+
+    curl -s \
+        --form-string "token=$PUSHOVER_TOKEN" \
+        --form-string "user=$PUSHOVER_USER" \
+        --form-string "title=$title" \
+        --form-string "message=$message" \
+        https://api.pushover.net/1/messages.json
+}
+
+# Fonction pour envoyer une notification
+send_notification() {
+    local start_time="$1"
+    local end_time="$2"
+    local duration="$3"
+    local exit_code="$4"
+    local command="$5"
+
+    local status="✅ Succès"
+    [[ $exit_code -ne 0 ]] && status="❌ Échec (code: $exit_code)"
+
+    local title="Commande terminée: $status"
+    local message="Commande: $command
+Début: $start_time
+Fin: $end_time
+Durée: $duration"
+
+    if [ "$NOTIFICATION_TYPE" = "local" ]; then
+        send_local_notification "$title" "$message"
+    else
+        send_pushover_notification "$title" "$message"
+    fi
+}
+
+# Aide rapide
+show_help() {
+    echo "Usage: $0 [--local] command [args ...]"
+    echo "Examples:"
+    echo "  $0 sleep 10"
+    echo "  $0 --local make -j8"
+    exit 0
+}
+
+# Parse le flag --local si présent
+if [ "$1" = "--local" ]; then
+    NOTIFICATION_TYPE="local"
+    shift
+fi
+
+# Vérifie si une commande a été fournie
+if [ $# -eq 0 ] || [ "$1" = "--help" ]; then
+    show_help
+fi
+
+# Capture la commande et exécute
+command="$*"
+start_time=$(date '+%Y-%m-%d %H:%M:%S')
+
+"$@"
+exit_code=$?
+
+end_time=$(date '+%Y-%m-%d %H:%M:%S')
+duration=$(($(date -d "$end_time" +%s) - $(date -d "$start_time" +%s)))
+duration_str=$(date -u -d "@$duration" +'%H:%M:%S')
+
+# Envoie la notification
+send_notification "$start_time" "$end_time" "$duration_str" "$exit_code" "$command"
+
+exit $exit_code
