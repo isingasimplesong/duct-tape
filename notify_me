@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-# Configuration par défaut
 NOTIFICATION_TYPE="pushover"
 PUSHOVER_TOKEN=$PUSHOVER_TOKEN_NOTIFY_ME
 PUSHOVER_USER=$PUSHOVER_USER_KEY
 
-# Fonction pour envoyer une notification locale
 send_local_notification() {
     local title="$1"
     local message="$2"
@@ -18,7 +16,6 @@ send_local_notification() {
     notify-send "$title" "$message"
 }
 
-# Fonction pour envoyer une notification via Pushover
 send_pushover_notification() {
     local title="$1"
     local message="$2"
@@ -31,7 +28,6 @@ send_pushover_notification() {
         https://api.pushover.net/1/messages.json
 }
 
-# Fonction pour envoyer une notification
 send_notification() {
     local start_time="$1"
     local end_time="$2"
@@ -55,7 +51,6 @@ Durée: $duration"
     fi
 }
 
-# Aide rapide
 show_help() {
     echo "Usage: $0 [--local] command [args ...]"
     echo "Examples:"
@@ -86,7 +81,6 @@ end_time=$(date '+%Y-%m-%d %H:%M:%S')
 duration=$(($(date -d "$end_time" +%s) - $(date -d "$start_time" +%s)))
 duration_str=$(date -u -d "@$duration" +'%H:%M:%S')
 
-# Envoie la notification
 send_notification "$start_time" "$end_time" "$duration_str" "$exit_code" "$command"
 
 exit $exit_code
