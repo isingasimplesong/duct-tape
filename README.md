@@ -22,3 +22,6 @@
 - [waybar-toggle-tray.sh](waybar-toggle-tray.sh) toggle the tray on & off from
  waybar, while [hypr-toggle-layouts.sh](hypr-toggle-layouts.sh) toggles
  [hyprland](https://hyprland.org/) layouts
+
+- [notify_me](notify_me) will send you either a local or a [pushover](https://pushover.net/) notification
+   when the following command ends. `notify_me sleep 3` or `notify_me --local sleep 3`
