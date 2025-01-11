@@ -38,8 +38,8 @@ send_notification() {
     local status="✅ Succès"
     [[ $exit_code -ne 0 ]] && status="❌ Échec (code: $exit_code)"
 
-    local title="Commande terminée: $status"
-    local message="Commande: $command
+    local title="Terminé: $status"
+    local message="$command
 Début: $start_time
 Fin: $end_time
 Durée: $duration"
