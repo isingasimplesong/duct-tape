@@ -64,7 +64,7 @@ if [ -f "$LAST_SNAPSHOT_FILE" ]; then
         fi
     else
         echo "Le snapshot précédent n'existe pas localement. Envoi d'un snapshot complet..."
-        if sudo btrfs send "$LOCAL_DEST/$SNAPSHOT_NAME" | sudo btrfs.receive "$DEST"; then
+        if sudo btrfs send "$LOCAL_DEST/$SNAPSHOT_NAME" | sudo btrfs receive "$DEST"; then
             echo "Snapshot complet envoyé avec succès vers $DEST/$SNAPSHOT_NAME"
         else
             echo "Erreur lors de l'envoi du snapshot complet"
