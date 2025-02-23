@@ -70,7 +70,7 @@ main() {
 		;;
 	8)
 		notification "P4k1D3rm! 📻🎶"
-		URL="https://www.youtube.com/watch?v=BCBENSeVVgc"
+		URL="https://www.youtube.com/watch?v=YBpqIYaV1rM"
 		break
 		;;
 	9)
