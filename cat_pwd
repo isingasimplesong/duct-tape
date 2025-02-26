@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# cat * $PWD + headers entre les fichiers :
+
+# File: ./path/to/file
+#######
+
+# EOF: ./path/to/file
+
+# exclut les répertoires cachés, 'uv.lock' et les fichiers listés dans .gitignore ou .*ignore,
+# avec un en-tête pour chaque fichier.
+
+excluded_names="'.*'"
+excluded_paths='./.*'
+excluded_files='uv.lock'
+
+ignore_patterns=$(find . -name ".gitignore" -o -name ".*ignore" -print0 | xargs -0 cat | tr '\n' '|' | sed 's/|$//')
+
+if [ -n "$ignore_patterns" ]; then
+  find . -type f \
+    -not -path "$excluded_paths" \
+    -not -name "$excluded_names" \
+    -not -name "$excluded_files" \
+    -print0 |
+    while IFS= read -r -d $'\0' file; do
+      if ! echo "$file" | grep -E -q "$ignore_patterns"; then
+        # Si le fichier N'EST PAS ignoré
+        echo "# File: $file"
+        echo "#######"
+        echo ""
+        cat "$file"
+        echo ""
+        echo "# EOF: $file"
+        echo ""
+      fi
+    done
+else
+  # Si aucun fichier .gitignore ou .*ignore
+  find . -type f \
+    -not -name "$excluded_names" \
+    -not -path "$excluded_paths" \
+    -not -name "$excluded_files" \
+    -print0 | while IFS= read -r -d $'\0' file; do
+    echo "# File: $file"
+    echo "#######"
+    echo ""
+    cat "$file"
+    echo "" # Ligne vide optionnelle entre les fichiers
+    echo "# EOF: $file"
+    echo ""
+  done
+fi
