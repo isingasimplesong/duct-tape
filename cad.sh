@@ -23,4 +23,5 @@ if [ "$usd_rate" = "null" ] || [ -z "$usd_rate" ] ||
 fi
 
 # Step 5: Show the notification
+LC_NUMERIC=C
 notify-send "CAD Exchange Rate" "$(printf '\n1 CAD$ = %.2f USD\n       = %.2f EUR' "$usd_rate" "$eur_rate")"
