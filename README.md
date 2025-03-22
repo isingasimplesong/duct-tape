@@ -9,6 +9,8 @@
  simple script showing stats about it, while [btrfs-move-fast.sh](btrfs-move-fast.sh)
  helps quickly moving snapshots around in the same volume
 
+- [rsync_backup.sh](rsync_backup.sh) is a simple helper script for rsync
+
 - [github-init-repo.sh](github-init-repo.sh) helps create a new private or
  public github repository directly from your shell
 
