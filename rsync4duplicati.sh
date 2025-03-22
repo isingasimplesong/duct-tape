@@ -48,11 +48,11 @@ log_rotate() {
     local max_size=$((SIZE * 1024 * 1024))
     if [ "$filesize" -ge "$max_size" ]; then
       # remove older log
-      if [ -f "${LOG_FILE%.log}.5.gz" ]; then
-        rm -f "${LOG_FILE%.log}.5.gz"
+      if [ -f "${LOG_FILE%.log}.3.gz" ]; then
+        rm -f "${LOG_FILE%.log}.3.gz"
       fi
       # rotate files
-      for i in $(seq 4 -1 1); do
+      for i in $(seq 2 -1 1); do
         if [ -f "${LOG_FILE%.log}.${i}.gz" ]; then
           mv "${LOG_FILE%.log}.${i}.gz" "${LOG_FILE%.log}.$((i + 1)).gz"
         fi
