@@ -1,2 +1,0 @@
-/backup/that/path
-/also/that/one

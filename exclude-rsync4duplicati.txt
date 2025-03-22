@@ -1,2 +1,0 @@
-/exclude/that/path
-/also/that/one
