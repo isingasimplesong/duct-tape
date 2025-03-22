@@ -6,7 +6,7 @@
 #
 # Synchonize $SOURCE with $DEST
 #
-#include (SOURCE) and exclude paths are read line by line
+# include and exclude paths are read line by line
 # from include (SOURCE) & exclude files
 #
 # Conf file must declare each variable sourced below
