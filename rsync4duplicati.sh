@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 
+# Simple Rsync script
+#
+# Requires a conf file, an include & exclude file
+#
+# Synchonize $SOURCE with $DEST
+#
+#include (SOURCE) and exclude paths are read line by line
+# from include (SOURCE) & exclude files
+#
+# Conf file must declare each variable sourced below
+#
+# Usage :
+# ./rsync4duplicati.sh
+#
+# or via crontab
+#
+# 40 * * * * /path/to/rsync4duplicati.sh > /dev/null 2>&1
+#
+# run as root if required by the path you want to sync
+
+set -euo pipefail
+
 CONF="/home/mathieu/.config/rsync4duplicati.conf"
 
 if [ ! -f "$CONF" ]; then
@@ -17,6 +39,23 @@ LOG_FILE="$BACKUP_LOG_FILE"
 USER_KEY="$PUSHOVER_USER_KEY"
 API_TOKEN="$PUSHOVER_API_TOKEN"
 SIZE="$LOGROTATE_MAX_SIZE"
+
+# Check if required command are availables
+for cmd in rsync mountpoint curl gzip stat; do
+  command -v "$cmd" >/dev/null 2>&1 || {
+    echo "Error: $cmd is not installed."
+    exit 1
+  }
+done
+
+# Ensure required variables are set
+required_vars=(BACKUP_MOUNT_POINT BACKUP_DESTINATION BACKUP_SOURCE EXCLUDE_FILE BACKUP_LOG_FILE PUSHOVER_USER_KEY PUSHOVER_API_TOKEN LOGROTATE_MAX_SIZE)
+for var in "${required_vars[@]}"; do
+  if [ -z "${!var:-}" ]; then
+    echo "Error: $var is not set in the configuration file." >>"$LOG_FILE"
+    exit 1
+  fi
+done
 
 # log function
 log_message() {
@@ -86,7 +125,7 @@ fi
 log_message "START" "Running Rsync backup..."
 
 # rsync
-while IFS= read -r src_path; do
+while IFS= read -r src_path || [ -n "$src_path" ]; do
 
   RSYNC_OUTPUT=$(rsync -axs --delete \
     --exclude-from "$EXCLUDE" "$src_path" "$DEST" 2>&1)
