@@ -125,9 +125,11 @@ run_rsync() {
         [ ! -e "$src_path" ] && log "SKIP" "Path not found: $src_path" && continue
 
         if [ "$DRY_RUN" -eq 1 ]; then
-            rsync_args=(-anx --delete --exclude-from "$EXCLUDE_FILE" "$src_path" "$BACKUP_DESTINATION")
+            #rsync_args=(-anx --delete --exclude-from "$EXCLUDE_FILE" "$src_path" "$BACKUP_DESTINATION")
+            rsync_args=(-anx --delete --inplace --no-inc-recursive --exclude-from "$EXCLUDE_FILE" "$src_path" "$BACKUP_DESTINATION")
         else
-            rsync_args=(-axs --delete --exclude-from "$EXCLUDE_FILE" "$src_path" "$BACKUP_DESTINATION")
+            #rsync_args=(-axs --delete --exclude-from "$EXCLUDE_FILE" "$src_path" "$BACKUP_DESTINATION")
+            rsync_args=(-axs --delete --inplace --no-inc-recursive --exclude-from "$EXCLUDE_FILE" "$src_path" "$BACKUP_DESTINATION")
         fi
 
         RSYNC_OUTPUT=$(rsync "${rsync_args[@]}" 2>&1)
