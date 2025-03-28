@@ -1,3 +1,4 @@
+blog
 .env
 data/
 node_modules/
@@ -22,3 +23,5 @@ docker-compose.override.yml
 docker-compose.yml
 .dockerignore
 *.sqlite3
+cookiecutter
+marimo
