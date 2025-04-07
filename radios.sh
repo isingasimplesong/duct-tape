@@ -76,7 +76,7 @@ main() {
 	9)
 		notification "TSF Jazz 📻🎶"
 		URL="http://tsfjazz.ice.infomaniak.ch/tsfjazz-high"
-		breaj
+		break
 		;;
 	10)
 		notification "France culture 📻"
