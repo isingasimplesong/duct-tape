@@ -20,12 +20,14 @@ is_inhibited() {
 start_inhibit() {
   if is_inhibited; then
     echo "Already keeping awake (PID $(cat "$LOCKFILE"))"
+    notify-send "Already keeping awake"
     exit 0
   fi
 
   systemd-inhibit --what=idle --who=keepawake --why="Prevent idle" tail -f /dev/null &
   echo $! >"$LOCKFILE"
   echo "Idle inhibition started (PID $!)"
+  # notify-send "Idle inhibition started (PID $!)"
 }
 
 stop_inhibit() {
@@ -33,20 +35,25 @@ stop_inhibit() {
     PID=$(cat "$LOCKFILE")
     if kill -0 "$PID" 2>/dev/null; then
       kill "$PID" && echo "Stopped idle inhibition (PID $PID)"
+      # notify-send "Stopped idle inhibition (PID $PID)"
     else
       echo "No active inhibitor (stale lock)"
+      notify-send "No active inhibitor (stale lock)"
     fi
     rm -f "$LOCKFILE"
   else
     echo "No idle inhibitor running"
+    notify-send "No idle inhibitor running"
   fi
 }
 
 toggle_inhibit() {
   if is_inhibited; then
     stop_inhibit
+    notify-send "Allow idle..."
   else
     start_inhibit
+    notify-send "Keep awake..."
   fi
 }
 
