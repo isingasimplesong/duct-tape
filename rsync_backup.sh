@@ -19,6 +19,7 @@ Options:
 Description:
   This script performs an rsync-based backup based on paths listed in a source file.
   It supports log rotation, pushover notifications (only on failure), and ensures only one instance runs at a time.
+  It's written with linux in mind. On Mac OS or *BSD, you'd probably have to make a few adjustments
 
 Configuration:
   The script expects a configuration file exporting the following variables:
@@ -68,12 +69,14 @@ fi
 source "$CONF"
 
 # Check required commands
+missing_cmds=()
 for cmd in rsync mountpoint curl gzip stat flock; do
-    command -v "$cmd" >/dev/null || {
-        echo "Missing command: $cmd"
-        exit 1
-    }
+    command -v "$cmd" >/dev/null || missing_cmds+=("$cmd")
 done
+if [ "${#missing_cmds[@]}" -ne 0 ]; then
+    echo "Missing command(s): ${missing_cmds[*]}"
+    exit 1
+fi
 
 # Check required vars
 required_vars=(BACKUP_MOUNT_POINT BACKUP_DESTINATION BACKUP_SOURCE_FILE EXCLUDE_FILE BACKUP_LOG_FILE LOGROTATE_MAX_SIZE)
