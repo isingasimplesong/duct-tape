@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Rsync backup script with dry-run, log rotation, locking, and pushover notification (on failure only)
+# Rsync backup script for linux, with dry-run, log rotation, locking, and pushover notification (on failure only)
 
 set -euo pipefail
 
