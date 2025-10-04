@@ -89,12 +89,13 @@ fi
 
 # 6) Notification (ligne vide avant Total + date sur ligne séparée)
 if $have_prev; then
-    body="$lines_with_delta
+    body="\r$lines_with_delta
 
 Total:\t\t$total_now ($total_pct_fmt)
+\r
 Depuis:\t\t$prev_date_fmt"
 else
-    body="$lines_with_delta
+    body="\r$lines_with_delta
 
 Total:\t\t$total_now"
 fi
