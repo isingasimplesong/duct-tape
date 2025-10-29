@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # --- Configuration ---
 # A list of significant DNSBLs. zen.spamhaus.org is a composite of SBL, XBL, PBL.

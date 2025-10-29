@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Strict mode
+set -euo pipefail
+IFS=$'\n\t'
+
 # Vérifier les arguments
 if [ $# -lt 2 ]; then
     echo "Usage: $(basename "$0") <source_pattern> <destination_directory>"

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Strict mode
+set -euo pipefail
+IFS=$'\n\t'
+
 # Config
 SOURCE="/home"
 LOCAL_DEST="/snapshots"
