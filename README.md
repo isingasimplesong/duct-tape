@@ -1,7 +1,7 @@
 # Duct Tape
 
 > [!IMPORTANT]
-> Mostly useless scripts, designed for [my local system](https://github.com/isingasimplesong/dotfiles) \
+> Mostly useless scripts, designed for [my local system](https://git.2027a.net/mathieu/dotfiles) \
 > **Use at your own risks**
 
 - [btrfs-backup.sh](btrfs-backup.sh) maintains a snapshosts-based backup
