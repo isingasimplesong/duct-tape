@@ -17,5 +17,5 @@
 
 - [radios.sh](radios.sh) let you chose from several audio streams to listen
 
-- [notify_me](notify_me) will send you either a local or a [pushover](https://pushover.net/) notification
-   when the following command ends. `notify_me sleep 3` or `notify_me --local sleep 3`
+- [notify_me.sh](notify_me.sh) will send you either a local or a [pushover](https://pushover.net/) notification
+   when the following command ends. `notify_me.sh sleep 3` or `notify_me.sh --local sleep 3`
