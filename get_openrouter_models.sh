@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
-# Anthropic Claude models fetcher
+# OpenRouter models fetcher
 set -euo pipefail
 IFS=$'\n\t'
-
-# Validate API key
-if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    echo "Error: ANTHROPIC_API_KEY not set" >&2
-    exit 1
-fi
 
 # Check dependencies
 for cmd in curl jq; do
@@ -17,11 +11,20 @@ for cmd in curl jq; do
     fi
 done
 
+# Build curl command (API key is optional for OpenRouter)
+curl_args=(
+    -sS
+    --fail-with-body
+    --max-time 30
+    https://openrouter.ai/api/v1/models
+)
+
+if [[ -n "${OPENROUTER_API_KEY:-}" ]]; then
+    curl_args+=(-H "Authorization: Bearer ${OPENROUTER_API_KEY}")
+fi
+
 # Fetch models with error handling
-response=$(curl -sS --fail-with-body --max-time 30 \
-    https://api.anthropic.com/v1/models \
-    -H "x-api-key: ${ANTHROPIC_API_KEY}" \
-    -H "anthropic-version: 2023-06-01" 2>&1) || {
+response=$(curl "${curl_args[@]}" 2>&1) || {
     echo "Error: curl failed" >&2
     echo "$response" >&2
     exit 1

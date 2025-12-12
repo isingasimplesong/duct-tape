@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Anthropic Claude models fetcher
+# OpenAI models fetcher
 set -euo pipefail
 IFS=$'\n\t'
 
 # Validate API key
-if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    echo "Error: ANTHROPIC_API_KEY not set" >&2
+if [[ -z "${OPENAI_API_KEY:-}" ]]; then
+    echo "Error: OPENAI_API_KEY not set" >&2
     exit 1
 fi
 
@@ -19,9 +19,8 @@ done
 
 # Fetch models with error handling
 response=$(curl -sS --fail-with-body --max-time 30 \
-    https://api.anthropic.com/v1/models \
-    -H "x-api-key: ${ANTHROPIC_API_KEY}" \
-    -H "anthropic-version: 2023-06-01" 2>&1) || {
+    https://api.openai.com/v1/models \
+    -H "Authorization: Bearer ${OPENAI_API_KEY}" 2>&1) || {
     echo "Error: curl failed" >&2
     echo "$response" >&2
     exit 1
