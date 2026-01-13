@@ -8,9 +8,9 @@ IFS=$'\n\t'
 SOURCE="/home"
 LOCAL_DEST="/snapshots"
 DEST="/run/media/mathieu/ext_ssd/backups"
-KEEP_LOCAL=10   # Nombre de snapshots locaux à conserver
-KEEP_DISTANT=31 # Nombre de snapshots distant à conserver
-# KEEP_DAILY=7  # Rétention des snapshots distants
+KEEP_LOCAL=10   # Number of local snapshots to keep
+KEEP_DISTANT=31 # Number of remote snapshots to keep
+# KEEP_DAILY=7  # Remote snapshot retention
 # KEEP_WEEKLY=4
 # KEEP_MONTHLY=6
 DATE=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -26,88 +26,88 @@ get_age_days() {
 }
 
 if ! mountpoint -q "$DEST/.."; then
-    echo "Erreur: Le disque externe n'est pas monté sur $DEST"
+    echo "Error: External drive is not mounted at $DEST"
     exit 1
 fi
 
-# Vérifier la dernière exécution
+# Check last run
 if [ -f "$LAST_RUN_FILE" ]; then
     last_run=$(cat "$LAST_RUN_FILE")
     days_since_last_run=$((($(date +%s) - $(date -d "$last_run" +%s)) / 86400))
     if [ $days_since_last_run -gt 7 ]; then
-        echo "Attention: $days_since_last_run jours se sont écoulés depuis la dernière sauvegarde."
+        echo "Warning: $days_since_last_run days have passed since the last backup."
     fi
 else
-    echo "Première exécution détectée."
+    echo "First run detected."
 fi
 
-# Créer un nouveau snapshot en lecture seule de /home
+# Create a new read-only snapshot of /home
 if sudo btrfs subvolume snapshot -r "$SOURCE" "$LOCAL_DEST/$SNAPSHOT_NAME"; then
-    echo "Snapshot local créé avec succès: $LOCAL_DEST/$SNAPSHOT_NAME"
+    echo "Local snapshot created successfully: $LOCAL_DEST/$SNAPSHOT_NAME"
 else
-    echo "Erreur lors de la création du snapshot local"
+    echo "Error while creating local snapshot"
     exit 1
 fi
 
-# Envoyer le snapshot vers la destination
+# Send the snapshot to the destination
 if [ -f "$LAST_SNAPSHOT_FILE" ]; then
     last_snapshot=$(cat "$LAST_SNAPSHOT_FILE")
     if [ -d "$LOCAL_DEST/$last_snapshot" ]; then
-        echo "Envoi d'un snapshot incrémentiel..."
+        echo "Sending an incremental snapshot..."
         if sudo btrfs send -p "$LOCAL_DEST/$last_snapshot" "$LOCAL_DEST/$SNAPSHOT_NAME" | sudo btrfs receive "$DEST"; then
-            echo "Snapshot incrémental envoyé avec succès vers $DEST/$SNAPSHOT_NAME"
+            echo "Incremental snapshot sent successfully to $DEST/$SNAPSHOT_NAME"
         else
-            echo "Erreur lors de l'envoi du snapshot incrémentiel. Tentative d'envoi complet..."
+            echo "Error sending incremental snapshot. Attempting full send..."
             if sudo btrfs send "$LOCAL_DEST/$SNAPSHOT_NAME" | sudo btrfs receive "$DEST"; then
-                echo "Snapshot complet envoyé avec succès vers $DEST/$SNAPSHOT_NAME"
+                echo "Full snapshot sent successfully to $DEST/$SNAPSHOT_NAME"
             else
-                echo "Erreur lors de l'envoi du snapshot complet"
+                echo "Error sending full snapshot"
                 sudo btrfs subvolume delete "$LOCAL_DEST/$SNAPSHOT_NAME"
                 exit 1
             fi
         fi
     else
-        echo "Le snapshot précédent n'existe pas localement. Envoi d'un snapshot complet..."
+        echo "Previous snapshot does not exist locally. Sending a full snapshot..."
         if sudo btrfs send "$LOCAL_DEST/$SNAPSHOT_NAME" | sudo btrfs receive "$DEST"; then
-            echo "Snapshot complet envoyé avec succès vers $DEST/$SNAPSHOT_NAME"
+            echo "Full snapshot sent successfully to $DEST/$SNAPSHOT_NAME"
         else
-            echo "Erreur lors de l'envoi du snapshot complet"
+            echo "Error sending full snapshot"
             sudo btrfs subvolume delete "$LOCAL_DEST/$SNAPSHOT_NAME"
             exit 1
         fi
     fi
 else
-    echo "Aucun snapshot précédent trouvé. Envoi d'un snapshot complet..."
+    echo "No previous snapshot found. Sending a full snapshot..."
     if sudo btrfs send "$LOCAL_DEST/$SNAPSHOT_NAME" | sudo btrfs receive "$DEST"; then
-        echo "Snapshot complet envoyé avec succès vers $DEST/$SNAPSHOT_NAME"
+        echo "Full snapshot sent successfully to $DEST/$SNAPSHOT_NAME"
     else
-        echo "Erreur lors de l'envoi du snapshot complet"
+        echo "Error sending full snapshot"
         sudo btrfs subvolume delete "$LOCAL_DEST/$SNAPSHOT_NAME"
         exit 1
     fi
 fi
 
-# Mettre à jour les fichiers de suivi
+# Update tracking files
 date +"%Y-%m-%d %H:%M:%S" >"$LAST_RUN_FILE"
 echo "$SNAPSHOT_NAME" >"$LAST_SNAPSHOT_FILE"
 
-# Fonction de nettoyage des snapshots locaux
+# Local snapshot cleanup function
 cleanup_local_snapshots() {
-    echo "Nettoyage des snapshots locaux..."
+    echo "Cleaning up local snapshots..."
     local snapshots=($(ls -1d "$LOCAL_DEST"/20*_*-*-* | sort -r))
     local count=0
     for snapshot in "${snapshots[@]}"; do
         if [ $count -ge $KEEP_LOCAL ]; then
-            echo "Suppression du snapshot local: $snapshot"
+            echo "Deleting local snapshot: $snapshot"
             sudo btrfs subvolume delete "$snapshot"
         fi
         count=$((count + 1))
     done
 }
 
-# Fonction de nettoyage des snapshots sur la destination
+# Remote snapshot cleanup function
 cleanup_remote_snapshots() {
-    echo "Nettoyage des snapshots distants..."
+    echo "Cleaning up remote snapshots..."
     cd "$DEST" || exit
 
     local snapshots=($(ls -1d 20*_*-*-* | sort -r))
@@ -115,16 +115,16 @@ cleanup_remote_snapshots() {
     for snapshot in "${snapshots[@]}"; do
         local age=$(get_age_days "$snapshot")
 
-        # Supprimer tous les snapshots plus vieux que 31 jours
+        # Delete all snapshots older than KEEP_DISTANT days
         if [ $age -gt $KEEP_DISTANT ]; then
-            echo "Suppression du snapshot distant: $snapshot"
+            echo "Deleting remote snapshot: $snapshot"
             sudo btrfs subvolume delete "$snapshot"
         fi
     done
 }
 
-# Exécuter le nettoyage
+# Run cleanup
 cleanup_local_snapshots
 cleanup_remote_snapshots
 
-echo "Sauvegarde et nettoyage terminés"
+echo "Backup and cleanup complete"
