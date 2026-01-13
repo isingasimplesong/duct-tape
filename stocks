@@ -1,2 +1,2 @@
 #!/bin/bash
-exec uv run --project /home/mathieu/Projets/stocks-cli/stocks stocks "$@"
+exec uv run --project /home/mathieu/Projets/stocks/main stocks "$@"
